@@ -1,3 +1,4 @@
+from typing import Any
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.urls import reverse
@@ -31,6 +32,12 @@ class DetailView(generic.DetailView):
 class ResultsView(generic.DetailView):
     model = Question
     template_name = "polls/results.html"
+    def get_context_data(self, **kwargs: Any):
+        context = super().get_context_data(**kwargs)
+        question = self.get_object()
+        poll_results = [[choice.choice_text, choice.votes] for choice in question.choice.all()]
+        context['poll_results'] = poll_results
+        return context
 
 
 def vote(request, question_id):
