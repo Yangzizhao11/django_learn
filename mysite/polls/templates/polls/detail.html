@@ -1,22 +1,30 @@
 {% extends 'base.html' %}
+
 {% block body %}
+
 <h2> {{ question.question_text }} </h2>
 <hr class="my-4">
 <fieldset>
-<form action="{% url 'polls:vote' question.id %}" method="post">
-  {% csrf_token %}
-  {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
-  {% for choice in question.choice.all %}
-  <div class="form-check">
-    <input class="form-check-input" type='radio' name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}">
-    <label class="form-check-label" for="choice{{ forloop.counter }}">
-      {{ choice.choice_text }}
-    </label>
-  </div>
-  {% endfor %}
-  <hr class="my-4">
-  <button type='submit' class="btn btn-outline-success">Vote</button> 
-</form>
+    <form action="{% url 'polls:vote' question.id %}" method="post">
+        {% csrf_token %}
+        {% if error_message %}
+            <p>
+                <strong>
+                    {{ error_message }}
+                </strong>
+            </p>
+        {% endif %}
+        {% for choice in question.choices.all %}
+            <div class="form-check">
+                  <input class="form-check-input" type='radio' name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}">
+                  <label class="form-check-label" for="choice{{ forloop.counter }}">
+                    {{ choice.choice_text }}
+                  </label>
+            </div>
+        {% endfor %}
+        <hr class="my-4">
+        <button type='submit' class="btn btn-outline-success">Vote</button> 
+    </form>
 </fieldset>
 
 {% endblock %}

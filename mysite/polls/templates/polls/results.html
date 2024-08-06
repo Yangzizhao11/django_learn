@@ -6,7 +6,7 @@
 {% if error_message %}
 <p>Voting failed</p>
 {% else %}
-    <div id="piechart"></div>
+<div id="piechart"></div>
 {% endif %}
 <hr class="my-4">
 <a href="{% url 'polls:detail' question.id %}">Vote again?</a>
